@@ -4,10 +4,11 @@ import { recipes } from "./Data";
 
 const recipeSlice = createSlice({
     name: "recipe",
-    initialState: recipes,
+    initialState: JSON.parse(localStorage.getItem("recipes")) || [],
     reducers: {
         addRecipe: (state, action) => {
             state.push(action.payload)
+            localStorage.setItem("recipes", JSON.stringify(state))
         },
 
         editRecipe: (state, action) => {
@@ -19,11 +20,15 @@ const recipeSlice = createSlice({
                 existingRecipe.ingerdients = ingerdients
                 existingRecipe.instructions = instructions
             }
+            localStorage.setItem("recipes", JSON.stringify(state))
         },
 
         deleteRecipe: (state, action) => {
-            return state.filter(recipe => recipe.id != action.payload)
+            const newState = state.filter(recipe => recipe.id != action.payload)
+            localStorage.setItem("recipes", JSON.stringify(newState))
+            return newState
         }
+        
     }
 })
 
