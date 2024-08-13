@@ -13,9 +13,13 @@ function Create() {
     const recipes = useSelector(state => state.recipe)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const randomNumberInRange = (min, max) => {
+        return Math.floor(Math.random()
+            * (max - min + 1)) + min;
+    };
     const handleSubmit =(e)=>{
         e.preventDefault()
-        dispatch(addRecipe({id:recipes[recipes.length-1].id+1, ...recipe}))
+        dispatch(addRecipe({id: randomNumberInRange(100000, 999999), ...recipe}))
         navigate('/')
     }
 
